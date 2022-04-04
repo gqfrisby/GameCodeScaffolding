@@ -8,6 +8,33 @@ public class Player
     private int currency;
     private int mp;
     private int stamina;
+    
+    public Player(){
+
+    }
+
+    public Player(String name, int health, int currency, int mp, int stamina){
+        this.name = "";
+        this.health = 200;
+        this.currency = 0;
+        this.mp = 50;
+        this.stamina = 50;
+    }
+
+    public void createCharacter(){
+        Scanner kb = new Scanner(System.in);
+        String input;
+
+        System.out.println("(Enter your name.)");
+        input = kb.next();
+        name = input;
+
+        System.out.println("You are " + name.toUpperCase() + ".\n" +
+                "Health: " + health +
+                "\nMoney: " + currency +
+                "\nMP: " + mp +
+                "\nStamina: " + stamina);
+    }
 
     public int battleCounter()
     {
