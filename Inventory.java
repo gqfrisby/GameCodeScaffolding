@@ -1,30 +1,52 @@
-public class Inventory extends Player
+import java.util.ArrayList;
+
+public class Consumable extends Inventory
 {
-    private Trinkets[] trinkets;
-
-    public void useItem()
+    private static String name;
+    private String description;
+    private int healthEffect;
+    private int mpEffect;
+    public Consumable(String name, String description, int healthEffect, int mpEffect,
+                      ArrayList<Trinket> Trinkets, ArrayList<Consumable> Consumables)
     {
-
+        super(Trinkets, Consumables);
+        this.name = name;
+        this.description = description;
+        this.healthEffect = healthEffect;
+        this.mpEffect = mpEffect;
     }
-
-    public void discardItem()
+// Getters/Setters
+    public void setName(String name)
     {
-
+        this.name = name;
     }
-
-    public String listContents()
+    public static String getName()
     {
-        return "";
+        return name;
+    }
+    public void setDescription(String description)
+    {
+        this.description = description;
+    }
+    public String getDescription()
+    {
+        return description;
+    }
+    public void setHealthEffect(int healthEffect)
+    {
+        this.healthEffect = healthEffect;
     }
 
-
-    //Getters and setters
-
-    public Trinkets[] getTrinkets() {
-        return trinkets;
+    public int getHealthEffect()
+    {
+        return healthEffect;
     }
-
-    public void setTrinkets(Trinkets[] trinkets) {
-        this.trinkets = trinkets;
+    public void setMpEffect(int mpEffect)
+    {
+        this.mpEffect = mpEffect;
+    }
+    public int getMpEffect()
+    {
+        return mpEffect;
     }
 }
