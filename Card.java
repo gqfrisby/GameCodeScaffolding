@@ -11,6 +11,10 @@ public class Card extends Deck
         this.defense = defense;
     }
 
+    public String toString()
+    {
+        return name + "\t\t\t" + strength + "\t\t\t"+ defense;
+    }
     //Getters and setters
 
     public String getName() {
