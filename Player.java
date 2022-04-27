@@ -51,16 +51,12 @@ public class Player
 
     }
 
-    public void attack()
+    public void firstBoss()
     {
-
+        Deck deck = new Deck();
+        Hand hand = new Hand(deck);
+        hand.toString();
     }
-
-    public void spareEnemy()
-    {
-
-    }
-
 
     //Getters and setters
 
