@@ -1,56 +1,82 @@
 import java.util.ArrayList;
 
-public class Consumable extends Inventory
+public class Trinket
 {
-    public String name;
     private String description;
-    private int healthEffect;
-    private int mpEffect;
+    private String trinketName;
+    private int buffHealth;
+    private int buffMp;
+    private int buffStamina;
     private int price;
-    public Consumable(String name, String description, int healthEffect, int mpEffect, int price,
-                      ArrayList<Trinket> Trinkets, ArrayList<Consumable> Consumables, int health, int mp)
+    public Trinket(String description, String trinketName, int buffStamina, int buffHealth, int buffMp, int price)
     {
-        super(Trinkets, Consumables, health, mp);
-        this.name = name;
         this.description = description;
-        this.healthEffect = healthEffect;
-        this.mpEffect = mpEffect;
+        this.trinketName = trinketName;
+        this.buffStamina = buffStamina ;
+        this.buffHealth = buffHealth ;
+        this.buffMp = buffMp;
         this.price = price;
     }
-// Getters/Setters
-    public void setName(String name)
+    public int increaseHealth(int currentHealth)
     {
-        this.name = name;
+        currentHealth = currentHealth + buffHealth;
+        return currentHealth;
     }
-    public String getName()
+    public int increaseMp(int currentMp)
     {
-        return name;
+       currentMp = currentMp + buffMp;
+       return currentMp;
     }
-    public void setDescription(String description)
+    public int increaseStamina(int currentStamina)
     {
-        this.description = description;
-    }
-    public String getDescription()
-    {
-        return description;
-    }
-    public void setHealthEffect(int healthEffect)
-    {
-        this.healthEffect = healthEffect;
+       currentStamina = currentStamina + buffStamina;
+       return currentStamina;
     }
 
-    public int getHealthEffect()
-    {
-        return healthEffect;
+    //Getters and setters
+
+    public String getDescription() {
+        return description;
     }
-    public void setMpEffect(int mpEffect)
-    {
-        this.mpEffect = mpEffect;
+
+    public int getBuffHealth() {
+        return buffHealth;
     }
-    public int getMpEffect()
-    {
-        return mpEffect;
+
+    public int getBuffMp() {
+        return buffMp;
     }
-    public void setprice(int price) {this.price = price;}
-    public int getPrice(){return price;}
+
+    public int getBuffstamina() {
+        return buffStamina;
+    }
+
+    public String getTrinketName()
+    {
+        return trinketName;
+    }
+
+    public int getPrice() {return price;}
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setBuffHealth(int buffHealth) {
+        this.buffHealth = buffHealth;
+    }
+
+    public void setBuffMp(int buffMp) {
+        this.buffMp = buffMp;
+    }
+
+    public void setBuffstamina(int buffstamina) {
+        this.buffStamina = buffstamina;
+    }
+
+    public void setTrinketName(String trinketName) {
+        this.trinketName = trinketName;
+    }
+
+    public void setPrice (int price) {this.price = price;}
 }
