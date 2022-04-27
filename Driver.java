@@ -209,17 +209,13 @@ public class Driver {
         int price4 = 0;
 
         Consumable healthPotion = new Consumable(name1, description1, healthEffect1, mpEffect1, price1, strinkets,
-                sconsumables);
-        sconsumables, health, mp);
+                sconsumables, health, mp);
         Consumable mpPotion = new Consumable(name2, description2, healthEffect2, mpEffect2, price2,  strinkets,
-                sconsumables);
-        sconsumables, health, mp);
+                sconsumables, health, mp);
         Consumable purpleApple = new Consumable(name3, description3, healthEffect3, mpEffect3, price3, strinkets,
-                sconsumables);
-        sconsumables, health, mp);
+                sconsumables, health, mp);
         Consumable leftovers = new Consumable(name4, description4, healthEffect4, mpEffect4, price4, strinkets,
-                sconsumables);
-        sconsumables, health, mp);
+                sconsumables, health, mp);
         sconsumables.add(healthPotion);
         sconsumables.add(mpPotion);
         sconsumables.add(purpleApple);
