@@ -1,52 +1,65 @@
-import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Location
 {
-    private String locationName;
-    private int difficulty;
-    private int enemiesPresent;
+    private ArrayList<String> locationNames = new ArrayList<>();
+    private ArrayList<Integer> difficulty;
+    private ArrayList<String> bossName;
 
-    Scanner kb = new Scanner(System.in);
 
-    public int playerAction()
-    {
-        return kb.nextInt();
+    public void Location(){
+        locationNames.add("Alabasta");
+        locationNames.add("Skypiea");
+
+        difficulty.add(3);
+        difficulty.add(4);
     }
 
-    public void randomEncounter()
+    public void location1()
     {
+        String locationDescription = "";
 
+        locationDescription += "\nA dry sandy wind brushes across your face... You are now entering " + locationNames.get(0) +
+        "\n" + locationNames.get(0) + " is a Kingdom located in the midst of a vast Desert" +
+                "\n" + locationNames.get(0) + " has a difficulty rating of" + difficulty.get(0);
+
+        System.out.println(locationDescription);
     }
 
-    public String locationDescription()
-    {
-        return "";
-    }
+    public void location2(){
+        String locationDescription = "";
 
+        locationDescription += "\nA cool breeze blows by... you are now entering " + locationNames.get(1) +
+                "\n" + locationNames.get(1) + " is an island located in the clouds" +
+                "\n" + locationNames.get(1) + " has a difficulty rating of " + difficulty.get(1);
+    }
 
     //Getters and setters
 
-    public String getLocationName() {
-        return locationName;
+    public ArrayList<String> getLocationName() {
+        return locationNames;
     }
 
-    public int getDifficulty() {
+    public ArrayList<Integer> getDifficulty() {
+
         return difficulty;
     }
 
-    public int getEnemiesPresent() {
-        return enemiesPresent;
+    public ArrayList<String> getBossName() {
+
+        return bossName;
     }
 
-    public void setLocationName(String locationName) {
-        this.locationName = locationName;
+    public void setLocationName(ArrayList<String> locationNames) {
+        locationNames.add("");
+        this.locationNames = locationNames;
     }
 
-    public void setDifficulty(int difficulty) {
+    public void setDifficulty(ArrayList<Integer> difficulty) {
         this.difficulty = difficulty;
     }
 
-    public void setEnemiesPresent(int enemiesPresent) {
-        this.enemiesPresent = enemiesPresent;
+    public void setBossName(ArrayList<String> bossName) {
+        this.bossName = bossName;
     }
 }
