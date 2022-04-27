@@ -8,9 +8,9 @@ public class Consumable extends Inventory
     private int mpEffect;
     private int price;
     public Consumable(String name, String description, int healthEffect, int mpEffect, int price,
-                      ArrayList<Trinket> Trinkets, ArrayList<Consumable> Consumables)
+                      ArrayList<Trinket> Trinkets, ArrayList<Consumable> Consumables, int health, int mp)
     {
-        super(Trinkets, Consumables);
+        super(Trinkets, Consumables, health, mp);
         this.name = name;
         this.description = description;
         this.healthEffect = healthEffect;
