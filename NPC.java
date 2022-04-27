@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -5,10 +6,13 @@ public class NPC
 {
     private boolean npcAlignment;
     private int npcStrength;
+    private Trinket trin;
+    private ArrayList<Trinket> trinkets = new ArrayList<Trinket>();
+
 
     static Scanner kb = new Scanner(System.in);
 
-    public static void goodNPCInteraction(){
+    public static Trinket goodNPCInteraction(ArrayList<Trinket> trinkets){
         int input;
         System.out.println("Child villager approaches! Villager says: Hi, traveller.");
         System.out.println("\n1. What can you tell me about this area?" +
@@ -27,6 +31,7 @@ public class NPC
                 if(input == 2){
                     System.out.println("Villager: Really? Well, then you'll need my help, too!");
                     System.out.println("(The villager hands you something. You're not exactly sure what it's supposed to do.");
+                    trinkets.add(trinkets.get(3));
                     System.out.println("(The villager leaves, skipping.)");
                 }
         }
@@ -49,6 +54,7 @@ public class NPC
             System.out.println("Villager: All right, then. See you, I guess.");
         }
         else System.out.println("You screamed some weird gibberish. Villager left, bewildered.");
+        return trinkets.get(3);
     }
 
     public static int badNPCInteraction(int currentCurrency){
@@ -155,7 +161,7 @@ public class NPC
         this.npcAlignment = align.nextBoolean();
         getNPCAlignment();
         if(npcAlignment == true){
-            goodNPCInteraction();
+            goodNPCInteraction(trinkets);
         }
     }
 
