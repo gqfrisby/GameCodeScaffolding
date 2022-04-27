@@ -1,3 +1,4 @@
+import java.util.Locale;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Random;
@@ -25,7 +26,7 @@ public class Driver {
         player = new Player(name, health, currency, mp, stamina);
         Inventory playerInven = new Inventory(ptrinkets, pconsumables);
         intro();
-        System.out.println("******" + player.getName().toUpperCase() + "'s Stats******");
+        System.out.println("******" + name.toUpperCase() + "'s Stats******");
         System.out.println("You are " + name.toUpperCase() + ".\n" +
                 "Health: " + health +
                 "\nMoney: " + currency +
@@ -45,7 +46,7 @@ public class Driver {
             choice = kb.nextInt();
             switch (choice) {
                 case 1:
-                    //battle method
+                    player.dealCards();
                     break;
                 case 2:
                     System.out.println("You stop by a local tavern for the night.....");
@@ -173,14 +174,24 @@ public class Driver {
         Scanner kb = new Scanner(System.in);
         System.out.println("A strange, ornate letter sits atop your lopsided, peeling table. Very strange, considering you live" +
                 "alone. ...And you locked the door before you left this morning. You should read it." +
-                "\n'TO WHOM IT MAY CONCERN," +
-                "\nGreetings, fated traveller. I am Isdith, leader of the resistance.");
-        //incomplete
-        System.out.println("Would you like to embark on this journey? Y/N");
+                "\n\n'TO WHOM IT MAY CONCERN," +
+                "\nGreetings, fated traveller. I am Isdith, leader of the resistance. The fates have selected you, as prophesized" +
+                " by the moon. There is warrior's blood in your veins, and magic filling your lungs. You may not know me, but that" +
+                " is alright. I am merely a messenger for the gods. Please, traveller, save us from evil, before all is consumed.'");
+        System.out.println("\nCertainly, this couldn't have been intended for you. Or could it have? You have always longed for purpose" +
+                "and greatness, a chance to prove yourself.");
+        System.out.println("\nWould you like to embark on this journey? Y/N");
         String decision = kb.nextLine();
         if(decision.toUpperCase().equals("N")) {
             System.out.println("You walk back to bed.");
             System.out.println("GAME OVER");
+            System.exit(0);
+        }
+        if(decision.toUpperCase().equals("Y")){
+            System.out.println("Greetings, " + player.getName() + "!");
+        }
+        else{
+            System.out.println("Clearly you're not taking this seriously. Try again when you're ready.");
             System.exit(0);
         }
     }
