@@ -1,30 +1,43 @@
-import java.util.Locale;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Random;
 public class Driver {
     static Player player;
     Enemy enemy = new Enemy();
+    static int health;
+    static int mp;
     static ArrayList<Trinket> ptrinkets;
     static ArrayList<Consumable> pconsumables;
     static ArrayList<Trinket> strinkets =  new ArrayList<Trinket>();
     static ArrayList<Consumable> sconsumables = new ArrayList<Consumable>();
+    static Trinket emeraldRing;
+    static Trinket burningAthame;
+    static Trinket angelAmulet;
+    static Trinket rabbitsFoot;
+    static Trinket soulOfMarmu;
     public static void main(String[] args) {
         String name;
         Scanner kb = new Scanner(System.in);
         Random npc = new Random();
         createConsumables();
         createTrinkets();
+        int restCounter = 1;
+        int limit1 = 1;
+        int limit2 = 1;
+        int limit3 = 1;
         ptrinkets = new ArrayList<Trinket>();
         pconsumables = new ArrayList<Consumable>();
         System.out.println("(Enter your name.)");
         name = kb.nextLine();
-        int health = 200;
-        int currency = 100;
-        int mp = 50;
+        health = 200;
+        int currency = 150;
+        mp = 50;
         int stamina = 50;
+        int maxHealth = health;
+        int maxMp = mp;
+        boolean deathBlock;
         player = new Player(name, health, currency, mp, stamina);
-        Inventory playerInven = new Inventory(ptrinkets, pconsumables);
+        Inventory playerInven = new Inventory(ptrinkets, pconsumables, health, mp);
         intro();
         System.out.println("******" + name.toUpperCase() + "'s Stats******");
         System.out.println("You are " + name.toUpperCase() + ".\n" +
@@ -35,6 +48,29 @@ public class Driver {
         // location shit
         int choice;
         do {
+            if (ptrinkets.contains(emeraldRing))
+            {
+                if(limit1 > 0) {
+                    maxHealth += emeraldRing.getBuffHealth();
+                    maxMp += emeraldRing.getBuffMp();
+                    limit1 = limit1 - 1;
+                }
+            }
+            if (ptrinkets.contains(soulOfMarmu))
+            {
+                if(limit2 > 0) {
+                    maxHealth += soulOfMarmu.getBuffHealth();
+                    maxMp += soulOfMarmu.getBuffMp();
+                    limit2 = limit2 - 1;
+                }
+            }
+            if (ptrinkets.contains(angelAmulet))
+            {
+                if(limit3 > 0) {
+                    deathBlock = true;
+                    limit3 = limit3 - 1;
+                }
+            }
             System.out.println("********* What would you like to do? *********");
             System.out.println("1.) Battle");
             System.out.println("2.) Rest");
@@ -49,18 +85,27 @@ public class Driver {
                     player.firstBoss();
                     break;
                 case 2:
-                    System.out.println("You stop by a local tavern for the night.....");
-                    System.out.println("Health and MP restored");
-                    health = Rest.restoreHealth(health);
-                    mp = Rest.restoreMP(mp);
-                    break;
+                    if(restCounter > 0) {
+                        System.out.println("You stop by a local tavern for the night.....");
+                        System.out.println("Health and MP restored");
+                        health = Rest.restoreHealth(health, maxHealth);
+                        mp = Rest.restoreMP(mp, maxMp);
+                        restCounter = restCounter - 1;
+                    }
+                    else
+                    {
+                        System.out.println("Sorry, but you may only rest once per area.");
+                    }
                 case 3:
                     // Trade
                     break;
                 case 4:
                     Shop shop1 = new Shop(currency, ptrinkets, pconsumables, strinkets.get(0), sconsumables.get(0),
-                            sconsumables.get(0));
+                            sconsumables.get(1));
                     shop1.openShop();
+                    currency = shop1.getCurrency();
+                    ptrinkets = shop1.getTrinkets();
+                    pconsumables = shop1.getConsumables();
                     break;
                 case 5:
                     int npcChance = npc.nextInt(2);
@@ -73,8 +118,14 @@ public class Driver {
                     npcChance = 0;
                     break;
                 case 6:
-                    playerInven.viewInventory(currency, health, mp, name);
-                    break;
+                    int usec = playerInven.viewInventory(currency, health, mp, maxHealth, maxMp, name);
+                    if (usec > 0) {
+                        usec = usec - 1;
+                        health = playerInven.useHConsumable(usec, health, maxHealth);
+                        mp = playerInven.useMConsumable(usec, mp, maxMp);
+                        pconsumables.remove(usec);
+                        System.out.println("Consumable Used");
+                    }                    break;
                 case 7:
                     System.out.println("Thanks for Playing!");
                     System.exit(0);
@@ -120,11 +171,11 @@ public class Driver {
         int mp5 = 40;
         int price5 = 0;
 
-        Trinket emeraldRing = new Trinket(desc1, trinketName1, stam1, hp1, mp1, price1);
-        Trinket burningAthame = new Trinket(desc2, trinketName2, stam2, hp2, mp2, price2);
-        Trinket angelAmulet = new Trinket(desc3, trinketName3, stam3, hp3, mp3, price3);
-        Trinket rabbitsFoot = new Trinket(desc4, trinketName4, stam4, hp4, mp4, price4);
-        Trinket soulOfMarmu = new Trinket(desc5, trinketName5, stam5, hp5, mp5, price5);
+        emeraldRing = new Trinket(desc1, trinketName1, stam1, hp1, mp1, price1);
+        burningAthame = new Trinket(desc2, trinketName2, stam2, hp2, mp2, price2);
+        angelAmulet = new Trinket(desc3, trinketName3, stam3, hp3, mp3, price3);
+        rabbitsFoot = new Trinket(desc4, trinketName4, stam4, hp4, mp4, price4);
+        soulOfMarmu = new Trinket(desc5, trinketName5, stam5, hp5, mp5, price5);
         strinkets.add(emeraldRing);
         strinkets.add(burningAthame);
         strinkets.add(angelAmulet);
@@ -159,16 +210,19 @@ public class Driver {
 
         Consumable healthPotion = new Consumable(name1, description1, healthEffect1, mpEffect1, price1, strinkets,
                 sconsumables);
+        sconsumables, health, mp);
         Consumable mpPotion = new Consumable(name2, description2, healthEffect2, mpEffect2, price2,  strinkets,
                 sconsumables);
+        sconsumables, health, mp);
         Consumable purpleApple = new Consumable(name3, description3, healthEffect3, mpEffect3, price3, strinkets,
                 sconsumables);
+        sconsumables, health, mp);
         Consumable leftovers = new Consumable(name4, description4, healthEffect4, mpEffect4, price4, strinkets,
                 sconsumables);
+        sconsumables, health, mp);
         sconsumables.add(healthPotion);
         sconsumables.add(mpPotion);
         sconsumables.add(purpleApple);
-        sconsumables.add(leftovers);
     }
     public static void intro(){
         Scanner kb = new Scanner(System.in);
