@@ -46,7 +46,7 @@ public class Driver {
             choice = kb.nextInt();
             switch (choice) {
                 case 1:
-                    player.dealCards();
+                    player.firstBoss();
                     break;
                 case 2:
                     System.out.println("You stop by a local tavern for the night.....");
@@ -188,7 +188,7 @@ public class Driver {
             System.exit(0);
         }
         if(decision.toUpperCase().equals("Y")){
-            System.out.println("Greetings, " + player.getName() + "!");
+            System.out.println("Greetings. A perilous journey awaits you.");
         }
         else{
             System.out.println("Clearly you're not taking this seriously. Try again when you're ready.");
