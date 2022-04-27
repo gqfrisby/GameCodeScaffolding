@@ -1,14 +1,19 @@
 public class Rest
 {
-    public static int restoreHealth(int currentHealth)
+    public static int restoreHealth(int currentHealth, int maxHealth)
     {
-
-        currentHealth += currentHealth + 50;
+        if(currentHealth != maxHealth) {
+            currentHealth = maxHealth;
+            return currentHealth;
+        }
         return currentHealth;
     }
-    public static int restoreMP(int currentMP)
+    public static int restoreMP(int currentMP, int maxMp)
     {
-        currentMP = currentMP + 20;
+        if(currentMP != maxMp) {
+            currentMP = maxMp;
+            return currentMP;
+        }
         return currentMP;
     }
 }
