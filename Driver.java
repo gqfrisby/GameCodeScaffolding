@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.Random;
 public class Driver {
     static Player player;
-    Enemy enemy = new Enemy();
+    Enemy enemy;
     static int health;
     static int mp;
     static ArrayList<Trinket> ptrinkets;
@@ -15,23 +15,40 @@ public class Driver {
     static Trinket angelAmulet;
     static Trinket rabbitsFoot;
     static Trinket soulOfMarmu;
+
     public static void main(String[] args) {
         String name;
         Scanner kb = new Scanner(System.in);
         Random npc = new Random();
         createConsumables();
         createTrinkets();
+        createLocation();
         int restCounter = 1;
         int limit1 = 1;
         int limit2 = 1;
         int limit3 = 1;
         ptrinkets = new ArrayList<Trinket>();
         pconsumables = new ArrayList<Consumable>();
+        String locationName1 = "Alabasta";
+        String locationName2 = "Skypiea";
+        int location1Diff = 3;
+        int location2Diff = 4;
+        String locationDesc1;
+        String locationDesc2;
+
+        locationDesc1 = "\nA dry sandy wind brushes across your face... You are now entering " + locationName1 +
+                "\n" + locationName1 + " is a Kingdom located in the midst of a vast Desert" +
+                "\n" + locationName1 + " has a difficulty rating of " + location1Diff;
+
+        locationDesc2 = "\nA cool breeze blows by... you are now entering " + locationName2 +
+                "\n" + locationName2 + " is an island located in the clouds" +
+                "\n" + locationName2 + " has a difficulty rating of " + location2Diff;
+
         System.out.println("(Enter your name.)");
         name = kb.nextLine();
         health = 200;
         int currency = 150;
-        mp = 50;
+        int mp = 50;
         int stamina = 50;
         int maxHealth = health;
         int maxMp = mp;
@@ -45,7 +62,9 @@ public class Driver {
                 "\nMoney: " + currency +
                 "\nMP: " + mp +
                 "\nStamina: " + stamina);
-        // location shit
+        System.out.println("You exit your hometown with a fire in your eyes! Excited to explore the unknown.\n" +
+                locationName1.toUpperCase() + "\n" +
+                           locationDesc1);
         int choice;
         do {
             if (ptrinkets.contains(emeraldRing))
@@ -97,7 +116,16 @@ public class Driver {
                         System.out.println("Sorry, but you may only rest once per area.");
                     }
                 case 3:
-                    // Trade
+                    Trade trade1 = new Trade(strinkets.get(1), sconsumables.get(0), pconsumables);
+                    int returnInt = trade1.makeTrade(strinkets, pconsumables);
+                    if(returnInt == 1){
+                        ptrinkets.add(strinkets.get(1));
+                    }
+                    else{
+
+                    }
+                    pconsumables=trade1.getConsumables();
+
                     break;
                 case 4:
                     Shop shop1 = new Shop(currency, ptrinkets, pconsumables, strinkets.get(0), sconsumables.get(0),
@@ -112,7 +140,7 @@ public class Driver {
                     if (npcChance == 0) {
                        currency = NPC.badNPCInteraction(currency);
                     } else if(npcChance == 1) {
-                        NPC.goodNPCInteraction();
+                        ptrinkets.add(NPC.goodNPCInteraction(strinkets));
                     }
                     else{}
                     npcChance = 0;
@@ -220,14 +248,19 @@ public class Driver {
         sconsumables.add(mpPotion);
         sconsumables.add(purpleApple);
     }
+
+    public static void createLocation()
+    {
+
+    }
     public static void intro(){
         Scanner kb = new Scanner(System.in);
         System.out.println("A strange, ornate letter sits atop your lopsided, peeling table. Very strange, considering you live" +
-                "alone. ...And you locked the door before you left this morning. You should read it." +
+                "\nalone. ...And you locked the door before you left this morning. You should read it." +
                 "\n\n'TO WHOM IT MAY CONCERN," +
                 "\nGreetings, fated traveller. I am Isdith, leader of the resistance. The fates have selected you, as prophesized" +
-                " by the moon. There is warrior's blood in your veins, and magic filling your lungs. You may not know me, but that" +
-                " is alright. I am merely a messenger for the gods. Please, traveller, save us from evil, before all is consumed.'");
+                "\nby the moon. There is warrior's blood in your veins, and magic filling your lungs. You may not know me, but that" +
+                "\nis alright. I am merely a messenger for the gods. Please, traveller, save us from evil, before all is consumed.'");
         System.out.println("\nCertainly, this couldn't have been intended for you. Or could it have? You have always longed for purpose" +
                 "and greatness, a chance to prove yourself.");
         System.out.println("\nWould you like to embark on this journey? Y/N");
