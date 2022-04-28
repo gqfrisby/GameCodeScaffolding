@@ -4,23 +4,15 @@ public class Enemy
 {
     private String name;
     private int health;
-    private int currency;
-    private int mp;
-    private int stamina;
+    private int baseAttack;
+    private String description;
 
-    public void createRandomEnemy(){
-        Random randomStat = new Random();
-        this.health = randomStat.nextInt(10, 50);
-        this.mp = randomStat.nextInt(10, 50);
-        this.stamina = randomStat.nextInt(10, 50);
-    }
 
-    public void randomEncounter(){
-        createRandomEnemy();
-        System.out.println("You enter a random encounter! An opponent approaches." +
-                "Health: " + getHealth() +
-                "\nMP: " + getMp()
-                + "\nStamina: " + getStamina());
+    public Enemy(String name, String description, int health, int baseAttack){
+        this.name =  name;
+        this.description = description;
+        this.health = health;
+        this.baseAttack = baseAttack;
     }
 
     public void attack()
@@ -50,29 +42,5 @@ public class Enemy
 
     public void setHealth(int health) {
         this.health = health;
-    }
-
-    public int getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(int currency) {
-        this.currency = currency;
-    }
-
-    public int getMp() {
-        return mp;
-    }
-
-    public void setMp(int mp) {
-        this.mp = mp;
-    }
-
-    public int getStamina() {
-        return stamina;
-    }
-
-    public void setStamina(int stamina) {
-        this.stamina = stamina;
     }
 }
