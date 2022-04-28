@@ -3,7 +3,6 @@ import java.util.ArrayList;
 import java.util.Random;
 public class Driver {
     static Player player;
-    Enemy enemy;
     static int health;
     static int mp;
     static ArrayList<Trinket> ptrinkets;
@@ -22,7 +21,6 @@ public class Driver {
         Random npc = new Random();
         createConsumables();
         createTrinkets();
-        createLocation();
         int restCounter = 1;
         int limit1 = 1;
         int limit2 = 1;
@@ -48,7 +46,7 @@ public class Driver {
         name = kb.nextLine();
         health = 200;
         int currency = 150;
-        int mp = 50;
+        mp = 50;
         int stamina = 50;
         int maxHealth = health;
         int maxMp = mp;
@@ -116,31 +114,43 @@ public class Driver {
                         System.out.println("Sorry, but you may only rest once per area.");
                     }
                 case 3:
-                    Trade trade1 = new Trade(strinkets.get(1), sconsumables.get(0), pconsumables);
-                    int returnInt = trade1.makeTrade(strinkets, pconsumables);
-                    if(returnInt == 1){
-                        ptrinkets.add(strinkets.get(1));
-                    }
-                    else{
-
-                    }
-                    pconsumables=trade1.getConsumables();
-
+                    // Trade
                     break;
                 case 4:
-                    Shop shop1 = new Shop(currency, ptrinkets, pconsumables, strinkets.get(0), sconsumables.get(0),
-                            sconsumables.get(1));
-                    shop1.openShop();
-                    currency = shop1.getCurrency();
-                    ptrinkets = shop1.getTrinkets();
-                    pconsumables = shop1.getConsumables();
+                    double r = Math.random();
+                    int randomNum = (int)(r *(3 - 0)) + 0;
+                    System.out.println(randomNum);
+                    if(randomNum == 0) {
+                        Shop shop1 = new Shop(currency, ptrinkets, pconsumables, strinkets.get(0), sconsumables.get(0),
+                                sconsumables.get(3));
+                        shop1.openShop();
+                        currency = shop1.getCurrency();
+                        ptrinkets = shop1.getTrinkets();
+                        pconsumables = shop1.getConsumables();
+                    }
+                    else if(randomNum == 1) {
+                        Shop shop1 = new Shop(currency, ptrinkets, pconsumables, strinkets.get(2), sconsumables.get(1),
+                                sconsumables.get(2));
+                        shop1.openShop();
+                        currency = shop1.getCurrency();
+                        ptrinkets = shop1.getTrinkets();
+                        pconsumables = shop1.getConsumables();
+                    }
+                     else if(randomNum == 2) {
+                        Shop shop1 = new Shop(currency, ptrinkets, pconsumables, strinkets.get(4), sconsumables.get(0),
+                                sconsumables.get(1));
+                        shop1.openShop();
+                        currency = shop1.getCurrency();
+                        ptrinkets = shop1.getTrinkets();
+                        pconsumables = shop1.getConsumables();
+                    }
                     break;
                 case 5:
                     int npcChance = npc.nextInt(2);
                     if (npcChance == 0) {
                        currency = NPC.badNPCInteraction(currency);
                     } else if(npcChance == 1) {
-                        ptrinkets.add(NPC.goodNPCInteraction(strinkets));
+                        NPC.goodNPCInteraction();
                     }
                     else{}
                     npcChance = 0;
@@ -183,7 +193,7 @@ public class Driver {
         int stam3 = 0;
         int hp3 = 0;
         int mp3 = 0;
-        int price3 = 200;
+        int price3 = 150;
 
         String trinketName4 = "Lucky Rabbit's Foot";
         String desc4 = "It's a rabbit's foot.(Increases morale.)";
@@ -197,7 +207,7 @@ public class Driver {
         int stam5 = 0;
         int hp5 = 10;
         int mp5 = 40;
-        int price5 = 0;
+        int price5 = 100;
 
         emeraldRing = new Trinket(desc1, trinketName1, stam1, hp1, mp1, price1);
         burningAthame = new Trinket(desc2, trinketName2, stam2, hp2, mp2, price2);
@@ -228,7 +238,7 @@ public class Driver {
         String description3 = ("Found in the Shop Keeps hut, you feel as if its calling to you......");
         int healthEffect3 = 100;
         int mpEffect3 = -100;
-        int price3 = 0;
+        int price3 = 80;
 
         String name4 = ("Leftovers");
         String description4 = ("A seemingly ancient take out box, it exudes a curious aroma");
@@ -249,18 +259,14 @@ public class Driver {
         sconsumables.add(purpleApple);
     }
 
-    public static void createLocation()
-    {
-
-    }
     public static void intro(){
         Scanner kb = new Scanner(System.in);
         System.out.println("A strange, ornate letter sits atop your lopsided, peeling table. Very strange, considering you live" +
-                "\nalone. ...And you locked the door before you left this morning. You should read it." +
+                "alone. ...And you locked the door before you left this morning. You should read it." +
                 "\n\n'TO WHOM IT MAY CONCERN," +
                 "\nGreetings, fated traveller. I am Isdith, leader of the resistance. The fates have selected you, as prophesized" +
-                "\nby the moon. There is warrior's blood in your veins, and magic filling your lungs. You may not know me, but that" +
-                "\nis alright. I am merely a messenger for the gods. Please, traveller, save us from evil, before all is consumed.'");
+                " by the moon. There is warrior's blood in your veins, and magic filling your lungs. You may not know me, but that" +
+                " is alright. I am merely a messenger for the gods. Please, traveller, save us from evil, before all is consumed.'");
         System.out.println("\nCertainly, this couldn't have been intended for you. Or could it have? You have always longed for purpose" +
                 "and greatness, a chance to prove yourself.");
         System.out.println("\nWould you like to embark on this journey? Y/N");
@@ -278,9 +284,22 @@ public class Driver {
             System.exit(0);
         }
     }
-    public void battle(Player player, Enemy enemy)
+    public void battle1(Player player, Enemy enemy)
     {
-
+        String name = "Crotch-O-Dile";
+        String description = "A monster with the bottom half of a human, nd the top half of a crocodile";
+        int health = 500;
+        int baseAttack = 10;
+        Enemy Crotch = new Enemy(name, description, health, baseAttack);
+        System.out.println("You continue to drag yourself through the desert as the taste of blood" +
+                "\n" + "fills your mouth");
+        System.out.println("Your weary eyes see a temple and decide to take refuge inside....");
+        System.out.println("Inside you are consumed by the shine of the glowing shine of " +
+                "throne at the center of the room.");
+        System.out.println("Upon this throne you see a man, or a beast, your not quite sure.");
+        System.out.println("You see his legs spread upon the throne, his voice booms:");
+        System.out.println("Crotch-O-Dile: \"YOU DARE STEP FOOT IN MY TEMPLE?! \n I'LL " +
+                "TEAR YOU APART!");
     }
     public String winMessage()
     {
